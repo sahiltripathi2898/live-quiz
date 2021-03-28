@@ -16,6 +16,32 @@ router.get('/', (req, res) => {
 		});
 });
 
+// Retrieve and return one word quiz from the database.
+router.get('/oneword', (req, res) => {
+	Quiz.find()
+		.then((quizes) => {
+			let oneWordArray = [];
+			quizes.forEach((quiz) => {
+				if (quiz.type === 'OneWord') oneWordArray.push(quiz);
+			});
+
+			// Send any one quiz from the oneWordArray
+			//console.log(oneWordArray);
+			var selectedQuiz =
+				oneWordArray[Math.floor(Math.random() * oneWordArray.length)];
+			console.log(selectedQuiz.question);
+			res.send(selectedQuiz);
+			setTimeout(() => {
+				console.log(selectedQuiz.explanation);
+			}, 4000);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving quiz.',
+			});
+		});
+});
+
 // Create and Save a new quiz
 router.post('/', (req, res) => {
 	// Create a quiz
@@ -30,7 +56,7 @@ router.post('/', (req, res) => {
 	quiz
 		.save()
 		.then((data) => {
-			res.send(data);
+			res.send('Quiz added');
 		})
 		.catch((err) => {
 			res.status(500).send({
