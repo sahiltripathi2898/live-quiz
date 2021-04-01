@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 // create express app
 const app = express();
 
+//cors
+var cors = require('cors');
+app.use(cors());
+
 // Parse requests
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 
