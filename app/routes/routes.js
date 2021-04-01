@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Quiz = require('../models/quizmodel.js');
+const OneWordSchema = require('../models/oneword.js');
+const MCQSchema = require('../models/mcq.js');
 
 // Retrieve and return all quiz from the database.
 router.get('/', (req, res) => {
@@ -18,7 +19,7 @@ router.get('/', (req, res) => {
 
 // Retrieve and return one word quiz from the database.
 router.get('/oneword', (req, res) => {
-	Quiz.find()
+	OneWordSchema.find()
 		.then((quizes) => {
 			let oneWordArray = [];
 			quizes.forEach((quiz) => {
@@ -42,10 +43,10 @@ router.get('/oneword', (req, res) => {
 		});
 });
 
-// Create and Save a new quiz
-router.post('/', (req, res) => {
+// Create and Save a new oneword quiz
+router.post('/oneword', (req, res) => {
 	// Create a quiz
-	const quiz = new Quiz({
+	const quiz = new OneWordSchema({
 		question: req.body.question,
 		answer: req.body.answer,
 		type: req.body.type,
@@ -56,11 +57,41 @@ router.post('/', (req, res) => {
 	quiz
 		.save()
 		.then((data) => {
-			res.send('Quiz added');
+			res.send('One Word Quiz added');
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message: err.message || 'Some error occurred while creating the quiz.',
+				message:
+					err.message ||
+					'Some error occurred while creating the One Word quiz.',
+			});
+		});
+});
+
+// Create and Save a new mcq quiz
+router.post('/mcq', (req, res) => {
+	// Create a quiz
+	const quiz = new MCQSchema({
+		question: req.body.question,
+		A: req.body.A,
+		B: req.body.B,
+		C: req.body.C,
+		D: req.body.D,
+		answer: req.body.answer,
+		type: req.body.type,
+		explanation: req.body.explanation,
+	});
+
+	// Save quiz in the database
+	quiz
+		.save()
+		.then((data) => {
+			res.send('MCQ Quiz added');
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while creating the MCQ quiz.',
 			});
 		});
 });
