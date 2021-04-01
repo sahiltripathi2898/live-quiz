@@ -40,10 +40,10 @@ router.get('/oneword', (req, res) => {
 			//console.log(oneWordArray);
 			var selectedQuiz =
 				oneWordArray[Math.floor(Math.random() * oneWordArray.length)];
-			console.log(selectedQuiz.question);
+			//console.log(selectedQuiz.question);
 			res.send(selectedQuiz);
 			setTimeout(() => {
-				console.log(selectedQuiz.explanation);
+				//console.log(selectedQuiz.explanation);
 			}, 6000);
 		})
 		.catch((err) => {
@@ -65,10 +65,10 @@ router.get('/mcq', (req, res) => {
 			// Send any one quiz from the mcqArray
 			//console.log(mcqArray);
 			var selectedQuiz = mcqArray[Math.floor(Math.random() * mcqArray.length)];
-			console.log(selectedQuiz.question);
+			//console.log(selectedQuiz.question);
 			res.send(selectedQuiz);
 			setTimeout(() => {
-				console.log(selectedQuiz.explanation);
+				//console.log(selectedQuiz.explanation);
 			}, 6000);
 		})
 		.catch((err) => {
