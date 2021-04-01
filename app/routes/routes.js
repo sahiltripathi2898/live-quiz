@@ -6,9 +6,19 @@ const MCQSchema = require('../models/mcq.js');
 
 // Retrieve and return all quiz from the database.
 router.get('/', (req, res) => {
-	Quiz.find()
-		.then((quizes) => {
-			res.send(quizes);
+	OneWordSchema.find()
+		.then((oneword) => {
+			res.send(oneword);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving quiz.',
+			});
+		});
+
+	MCQSchema.find()
+		.then((mcq) => {
+			res.send(mcq);
 		})
 		.catch((err) => {
 			res.status(500).send({
@@ -34,7 +44,32 @@ router.get('/oneword', (req, res) => {
 			res.send(selectedQuiz);
 			setTimeout(() => {
 				console.log(selectedQuiz.explanation);
-			}, 4000);
+			}, 6000);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving quiz.',
+			});
+		});
+});
+
+// Retrieve and return mcq quiz from the database.
+router.get('/mcq', (req, res) => {
+	MCQSchema.find()
+		.then((quizes) => {
+			let mcqArray = [];
+			quizes.forEach((quiz) => {
+				if (quiz.type === 'MCQ') mcqArray.push(quiz);
+			});
+
+			// Send any one quiz from the mcqArray
+			//console.log(mcqArray);
+			var selectedQuiz = mcqArray[Math.floor(Math.random() * mcqArray.length)];
+			console.log(selectedQuiz.question);
+			res.send(selectedQuiz);
+			setTimeout(() => {
+				console.log(selectedQuiz.explanation);
+			}, 6000);
 		})
 		.catch((err) => {
 			res.status(500).send({
