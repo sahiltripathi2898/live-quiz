@@ -33,14 +33,6 @@ mongoose
 		process.exit();
 	});
 
-// define a simple route
-app.get('/', (req, res) => {
-	res.json({
-		message:
-			'Welcome to Quiz application , you can test the API using postman or add /api/ at the end of the url',
-	});
-});
-
 //Routes middleware
 app.use('/api/', require('./app/routes/routes.js'));
 
