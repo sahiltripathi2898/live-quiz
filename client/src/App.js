@@ -25,7 +25,7 @@ function App() {
 		setoptionC('');
 		setoptionD('');
 		console.log('okay one word button clicked');
-		const res = await axios.get('http://localhost:2000/api/oneword');
+		const res = await axios.get('/api/oneword');
 		setques(res.data.question);
 		setType(res.data.type);
 
@@ -48,7 +48,7 @@ function App() {
 		setoptionC('');
 		setoptionD('');
 		console.log('okay one word button clicked');
-		const res = await axios.get('http://localhost:2000/api/mcq');
+		const res = await axios.get('/api/mcq');
 		setques(res.data.question);
 		setType(res.data.type);
 		setoptionA(res.data.A);
