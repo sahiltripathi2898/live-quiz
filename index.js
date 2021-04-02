@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 // create express app
 const app = express();
@@ -42,6 +43,16 @@ app.get('/', (req, res) => {
 
 //Routes middleware
 app.use('/api/', require('./app/routes/routes.js'));
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+	// Set static folder
+	app.use(express.static('client/build'));
+
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
 //Port Connection
 const PORT = process.env.PORT || 2000;
